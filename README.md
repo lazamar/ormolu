@@ -1,3 +1,30 @@
+**Fork of Ormolu with 4 spaces and prefix punctuation**
+
+Renders multiline type signatures like this
+
+```haskell
+pathsFrom
+    :: forall e. Real e
+    => Vertex
+    -> Graph e
+    -> [Path e]
+```
+
+Renders lists and records like this
+
+```haskell
+edges :: Graph e -> [Edge e]
+edges g =
+    [ (v , e , t)
+    | v <- vertices g
+    , (e , t) <- g ! v
+    ]
+
+data Labelled e = Labelled
+    { _labelling :: Labelling
+    , _graph :: Graph e
+    }
+```
 # Ormolu
 
 [![License BSD3](https://img.shields.io/badge/license-BSD3-brightgreen.svg)](http://opensource.org/licenses/BSD-3-Clause)
