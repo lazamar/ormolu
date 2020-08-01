@@ -683,11 +683,10 @@ p_hsExpr' s = \case
         compBody = brackets N . located es $ \xs -> do
           let p_parBody =
                 sep
-                  (breakpoint >> txt "|" >> space)
+                  (breakpoint >> deci (txt "|" >> space))
                   p_seqBody
               p_seqBody =
-                sitcc
-                  . sep
+                  sep
                     commaDel
                     (located' (sitcc . p_stmt))
               stmts = init xs
@@ -695,8 +694,7 @@ p_hsExpr' s = \case
               lists = foldr (liftAppend . gatherStmt) [] stmts
           located yield p_stmt
           breakpoint
-          txt "|"
-          space
+          deci (txt "|" >> space)
           p_parBody lists
     case ctx of
       DoExpr -> doBody "do"
