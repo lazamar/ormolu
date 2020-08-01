@@ -38,13 +38,12 @@ p_hsType' :: Bool -> TypeDocStyle -> HsType GhcPs -> R ()
 p_hsType' multilineArgs docStyle = \case
   HsForAllTy NoExtField visibility bndrs t -> do
     p_forallBndrs visibility p_hsTyVarBndr bndrs
-    interArgBreak
     p_hsTypeR (unLoc t)
   HsQualTy NoExtField qs t -> do
     located qs p_hsContext
-    space
-    txt "=>"
     interArgBreak
+    txt "=>"
+    space
     case unLoc t of
       HsQualTy {} -> p_hsTypeR (unLoc t)
       HsFunTy {} -> p_hsTypeR (unLoc t)
@@ -83,9 +82,9 @@ p_hsType' multilineArgs docStyle = \case
       located kd p_hsType
   HsFunTy NoExtField x y@(L _ y') -> do
     located x p_hsType
-    space
-    txt "->"
     interArgBreak
+    txt "->"
+    space
     case y' of
       HsFunTy {} -> p_hsTypeR y'
       _ -> located y p_hsTypeR
@@ -216,7 +215,7 @@ p_forallBndrs vis p tyvars =
     inci $ do
       sitcc $ sep breakpoint (sitcc . located' p) tyvars
       case vis of
-        ForallInvis -> txt "."
+        ForallInvis -> txt "." >> breakpoint
         ForallVis -> space >> txt "->"
 
 p_conDeclFields :: [LConDeclField GhcPs] -> R ()

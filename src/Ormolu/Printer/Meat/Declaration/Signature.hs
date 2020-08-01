@@ -56,12 +56,12 @@ p_typeAscription ::
   LHsSigWcType GhcPs ->
   R ()
 p_typeAscription HsWC {..} = inci $ do
-  space
-  txt "::"
   let t = hsib_body hswc_body
   if hasDocStrings (unLoc t)
     then newline
     else breakpoint
+  txt "::"
+  space
   located t p_hsType
 p_typeAscription (XHsWildCardBndrs x) = noExtCon x
 
