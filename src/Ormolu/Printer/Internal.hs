@@ -20,6 +20,7 @@ module Ormolu.Printer.Internal
     newline,
     useRecordDot,
     inci,
+    deci,
     sitcc,
     Layout (..),
     enterLayout,
@@ -382,6 +383,17 @@ inci (R m) = R (local modRC m)
         { rcIndent = rcIndent rc + indentStep
         }
 
+-- | Decrease indentation level by 2 characters (enough for a delimiter and a space)
+deci :: R () -> R ()
+deci (R m) = R (local modRC m)
+  where
+    modRC rc =
+      rc
+        { rcIndent = rcIndent rc - spaceFromIndentLevel
+        }
+
+    spaceFromIndentLevel = 2
+
 -- | Set indentation level for the inner computation equal to current
 -- column. This makes sure that the entire inner block is uniformly
 -- \"shifted\" to the right.
@@ -574,4 +586,4 @@ canUseBraces = R (asks rcCanUseBraces)
 
 -- | Indentation step.
 indentStep :: Int
-indentStep = 2
+indentStep = 4

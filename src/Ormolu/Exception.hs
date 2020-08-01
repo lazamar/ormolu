@@ -94,6 +94,6 @@ showParsingErr msg spn err =
     ]
       ++ map withIndent err
 
--- | Indent with 2 spaces for readability.
+-- | Indent with 4 spaces for readability.
 withIndent :: String -> String
-withIndent txt = "  " ++ txt
+withIndent txt = "    " ++ txt
