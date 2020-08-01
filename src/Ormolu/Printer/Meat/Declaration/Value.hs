@@ -708,7 +708,7 @@ p_hsExpr' s = \case
       TransStmtCtxt _ -> notImplemented "TransStmtCtxt"
   ExplicitList _ _ xs ->
     brackets s $
-      sep (commaDel' True) (sitcc . located' p_hsExpr) xs
+      sep commaDel (sitcc . located' p_hsExpr) xs
   RecordCon {..} -> do
     located rcon_con_name atom
     breakpoint

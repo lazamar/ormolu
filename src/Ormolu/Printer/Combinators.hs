@@ -54,7 +54,6 @@ module Ormolu.Printer.Combinators
     -- ** Literals
     comma,
     commaDel,
-    commaDel',
     equals,
 
     -- ** Stateful markers
@@ -291,15 +290,9 @@ brackets_ needBreaks open close style m = sitcc (vlayout singleLine multiLine)
 comma :: R ()
 comma = txt ","
 
-commaDel = commaDel' True
-
 -- | Delimiting combination with 'comma'. To be used with 'sep'.
-commaDel' :: Bool -> R ()
-commaDel' decreaseIndentation = breakpoint >> mod (comma >> space)
-    where
-        mod = if decreaseIndentation
-         then deci
-         else id
+commaDel ::  R ()
+commaDel = breakpoint >> deci (comma >> space)
 
 -- | Print @=@. Do not use @'txt' "="@.
 equals :: R ()
