@@ -122,6 +122,7 @@ optsParserInfo =
               $gitBranch,
               $gitHash
             ],
+          "modified version by Marcelo Lazaroni with 4 spaces and prefix punctuation",
           "using ghc-lib-parser " ++ VERSION_ghc_lib_parser
         ]
     exts :: Parser (a -> a)
