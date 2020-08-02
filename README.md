@@ -25,6 +25,25 @@ data Labelled e = Labelled
     , _graph :: Graph e
     }
 ```
+
+Moves qualified imports to the end
+
+```haskell
+import Data.Array.ST (STArray)
+import Data.Binfunctor (second)
+import Data.Function (on)
+import Data.Heap (Heap)
+import Data.List.NonEmpty (NonEmpty ((:|)))
+import Data.Maybe (listToMaybe)
+import Data.STRef
+import Data.Set (Set)
+import Data.Traversable (for)
+import qualified Data.Array as Array
+import qualified Data.Array.MArray as MArray
+import qualified Data.Heap as Heap
+import qualified Data.List.NonEmpty as NonEmpty
+import qualified Data.Set as Set
+```
 # Ormolu
 
 [![License BSD3](https://img.shields.io/badge/license-BSD3-brightgreen.svg)](http://opensource.org/licenses/BSD-3-Clause)

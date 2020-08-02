@@ -10,6 +10,7 @@ where
 
 import Data.Bifunctor
 import Data.Char (isAlphaNum)
+import Data.Either (partitionEithers)
 import Data.Function (on)
 import Data.List (foldl', nubBy, sortBy, sortOn)
 import Data.Map.Strict (Map)
@@ -24,6 +25,7 @@ import Ormolu.Utils (notImplemented, showOutputable)
 normalizeImports :: [LImportDecl GhcPs] -> [LImportDecl GhcPs]
 normalizeImports =
   fmap snd
+    . separateQualified
     . M.toAscList
     . M.fromListWith combineImports
     . fmap (\x -> (importId x, g x))
@@ -36,6 +38,16 @@ normalizeImports =
             ..
           }
     g _ = notImplemented "XImportDecl"
+
+-- | Moves qualified imports to the end of the list keeping
+-- both sorted.
+separateQualified :: [(ImportId, a)] -> [(ImportId, a)]
+separateQualified = uncurry (++) . partitionEithers . map toEither
+    where
+        toEither idAndDecl =
+            if importQualified $ fst idAndDecl
+            then Right idAndDecl
+            else Left idAndDecl
 
 -- | Combine two import declarations. It should be assumed that 'ImportId's
 -- are equal.
